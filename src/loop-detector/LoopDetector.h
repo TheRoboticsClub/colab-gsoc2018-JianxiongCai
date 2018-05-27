@@ -6,9 +6,13 @@
 
 class LoopDetector {
 public:
-    LoopDetector(SLAM_VIEWER::Map&);
+    LoopDetector(SLAM_VIEWER::Map&, const std::string&);
 
     bool addKeyFrame(SLAM_VIEWER::KeyFrame *);
+
+private:
+    // the directory to raw RGB image
+    std::string img_dir_;
 };
 
 

@@ -1,5 +1,6 @@
 #include <Config.h>
 #include "Map.h"
+#include "LoopDetector.h"
 
 int main (int argc, const char * argv[]){
     SLAM_VIEWER::Map map;
@@ -17,4 +18,8 @@ int main (int argc, const char * argv[]){
 
     // TODO: check directory exist
     std::string img_dir = std::string(argv[2]);
+
+    LoopDetector detector(map,img_dir);
+
+    return 0;
 }
