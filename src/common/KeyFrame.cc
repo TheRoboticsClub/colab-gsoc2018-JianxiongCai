@@ -23,7 +23,7 @@ using std::mutex;
 using std::unique_lock;
 using std::vector;
 
-namespace SLAM_VIEWER {
+namespace MapGen {
 
 
 KeyFrame::KeyFrame(int id, std::string filename, const vector<double> &pose):

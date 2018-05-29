@@ -24,7 +24,7 @@
 
 using std::vector;
 
-namespace SLAM_VIEWER {
+namespace MapGen {
 
 Config::Config() {
     // Default UI values

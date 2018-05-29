@@ -22,9 +22,10 @@
 
 #include <map>
 #include <mutex>
+#include <BowVector.h>
 #include "MapPoint.h"
 
-namespace SLAM_VIEWER {
+namespace MapGen {
 
 class MapPoint;
 
@@ -69,6 +70,9 @@ class KeyFrame {
     std::mutex mutexPose_;
     std::mutex mutexConnections_;
     std::mutex mutexFeatures_;
+
+    // BoW Vector
+    DBoW2::BowVector bow_vector_;
 
  public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW

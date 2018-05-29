@@ -29,7 +29,7 @@
 #include <string>
 #include "Map.h"
 
-namespace SLAM_VIEWER {
+namespace MapGen {
 
 struct CameraParameters {
     double fx;

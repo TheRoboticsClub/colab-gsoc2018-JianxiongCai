@@ -25,7 +25,7 @@
 #include "MapPoint.h"
 #include "KeyFrame.h"
 
-namespace SLAM_VIEWER {
+namespace MapGen {
 
 class MapPoint;
 class KeyFrame;

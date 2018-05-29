@@ -23,7 +23,7 @@
 using std::mutex;
 using std::unique_lock;
 
-namespace SLAM_VIEWER {
+namespace MapGen {
 
 MapPoint::MapPoint(int id, const std::vector<double> &position): id_(id) {
     assert(position.size() == 3);

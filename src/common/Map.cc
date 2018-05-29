@@ -24,7 +24,7 @@ using std::unique_lock;
 using std::vector;
 using std::set;
 
-namespace SLAM_VIEWER {
+namespace MapGen {
 
 Map::Map() {
 }

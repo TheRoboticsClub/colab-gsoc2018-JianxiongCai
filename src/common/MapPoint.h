@@ -25,7 +25,7 @@
 #include <Eigen/Dense>
 #include "KeyFrame.h"
 
-namespace SLAM_VIEWER {
+namespace MapGen {
 
 class KeyFrame;
 
