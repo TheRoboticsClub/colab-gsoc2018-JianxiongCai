@@ -13,35 +13,35 @@
 // DBoW
 #include <DBoW2.h>
 #include <BowVector.h>
+#include "ORBVocabularyExt.h"
 
-class LoopDetector {
-public:
-    // perform offline loop-detection from the loop detector
-    // if pretrained_voc is specified, use pretrained_voc
-    LoopDetector(MapGen::Map&, const std::string&, const std::string& pretrained_voc="");
+namespace MapGen {
 
-    std::vector<std::pair<int,int>> getLoopClosingPairs(MapGen::Map& map);
+    class LoopDetector {
+    public:
+        // perform offline loop-detection from the loop detector
+        // if pretrained_voc is specified, use pretrained_voc
+        LoopDetector(MapGen::Map &, const std::string &, const std::string &pretrained_voc = "");
 
-private:
-    // iterate through all images and compute all features (ORB)
-    std::vector<std::vector<cv::Mat>> computeAllFeatures(MapGen::Map&, const std::string&);
+        std::vector<std::pair<int, int>> getLoopClosingPairs(MapGen::Map &map);
 
-    bool load_voc(const std::string& voc_fname);
-
-    // TODO: Creating VOC from scratch is consuming too much memory
-    bool create_VOC(MapGen::Map& map);
+    private:
+        // iterate through all images and compute all features (ORB)
+        std::vector<std::vector<cv::Mat>> computeAllFeatures(MapGen::Map &, const std::string &);
 
 
-    // the directory to raw RGB image
-    std::string img_dir_;
+        // the directory to raw RGB image
+        std::string img_dir_;
 
-    // TODO: tun the parameter of orb vocabulary
-    OrbVocabulary voc_;
-    cv::Ptr<cv::ORB> orb_;
-    std::vector<std::vector<cv::Mat>> features_;
+        // TODO: tun the parameter of orb vocabulary
+        ORBVocabularyExt voc_;
+        cv::Ptr<cv::ORB> orb_;
+        std::vector<std::vector<cv::Mat>> features_;
 
-    std::vector<std::pair<int,int>> loop_closure_pairs_;
-};
+        std::vector<std::pair<int, int>> loop_closure_pairs_;
+    };
+
+}
 
 
 #endif //LOOP_DETECTION_LOOPDETECTOR_H

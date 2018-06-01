@@ -20,7 +20,9 @@ int main (int argc, const char * argv[]){
     std::string img_dir = std::string(argv[2]);
 
     // TODO: for testing only
-    LoopDetector detector(map,img_dir, "/home/ernest/SLAM/ORB_SLAM2/Vocabulary/ORBvoc.txt.tar.gz");
+    MapGen::LoopDetector detector(map,img_dir, "/home/ernest/SLAM/ORB_SLAM2/Vocabulary/ORBvoc.txt");
+
+    std::cout << "detector initialized" << std::endl;
 
     return 0;
 }

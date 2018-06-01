@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(loop-detection)
+project(slam-MapGen)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -20,12 +20,20 @@ include_directories(${DLib_INCLUDE_DIRS})
 include_directories(src/common)
 include_directories(src/loop-detector)
 
+# extending DBoW2 standard library
+include_directories(src/DBoW2-ext)
+
 # common
-file(GLOB common_src src/common/*)
+file(GLOB common_src src/common/*(.h|.cpp))
+file(GLOB dow2_ext_src src/DBoW2-ext/*(.h|.cpp))
 
 # Loop-detector
 file(GLOB loop_detector_src src/loop-detector/*)
-add_executable(loop_detection ${loop_detector_src} ${common_src} src/loop-detector/LoopDetector.cpp src/loop-detector/LoopDetector.h)
+add_executable(loop_detection
+        ${loop_detector_src}
+        ${common_src}
+        ${dow2_ext_src})
 target_link_libraries( loop_detection ${OpenCV_LIBS}
-        ${DBoW2_LIBS} ${DLib_LIBS}
+        ${DBoW2_LIBS}
+        ${DLib_LIBS}
         )
