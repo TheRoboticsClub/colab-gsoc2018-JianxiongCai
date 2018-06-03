@@ -3,8 +3,9 @@
 
 namespace MapGen {
 
-    LoopDetector::LoopDetector(MapGen::Map &map, const std::string &img_dir, const std::string &pretrained_voc) :
-            img_dir_(img_dir) {
+    LoopDetector::LoopDetector(MapGen::Map & map, const std::string & img_dir,
+                               const std::string &pretrained_voc, double loop_closure_thres) :
+            img_dir_(img_dir), loop_closure_thres_(loop_closure_thres) {
         // initialize variables
         orb_ = cv::ORB::create();
 
@@ -55,46 +56,31 @@ namespace MapGen {
         // BOOST_LOG_TRIVIAL(info) << "size of features_all: " << features_all.size();
     }
 
-    std::vector<std::pair<int, int>> LoopDetector::getLoopClosingPairs(MapGen::Map &map) {
-        for (MapGen::KeyFrame *frame : map.GetAllKeyFrames()) {
-            // read in the image
-            std::string img_path = img_dir_ + frame->GetFilename();
-            cv::Mat img = cv::imread(img_path);
-
-            // compute ORB features
-            cv::Mat mask;
-            std::vector<cv::KeyPoint> keypoints;
-            cv::Mat descriptors;
-            orb_->detectAndCompute(img, mask, keypoints, descriptors);
-
-            BOOST_LOG_TRIVIAL(info) << "total " << descriptors.rows << " descriptors";
-
-            // change the structure of descriptors
-            std::vector<cv::Mat> features;
-            features.resize(descriptors.rows);
-            for (int i = 0; i < descriptors.rows; ++i) {
-                features.push_back(descriptors.row(i));
-            }
-        }
+    std::vector<std::pair<KeyFrame *, KeyFrame *>> LoopDetector::getLoopClosingPairs() {
+        return loop_closure_pairs_;
     }
 
 
     void LoopDetector::detectLoops(MapGen::Map &map) {
-        double score_max = 0;
+        // double score_max = 0;
         auto all_keyframes = map.GetAllKeyFrames();
         for (int i = 0; i < all_keyframes.size(); i++){
             KeyFrame * kf_1 = all_keyframes[i];
+            // loop closure only apply for keyframes away from each other (10 keyframes here)
             for (int j = i+11; j < all_keyframes.size(); j++){
                 KeyFrame * kf_2 = all_keyframes[j];
                 double score = voc_.score(kf_1->getBowVector(), kf_2->getBowVector());
-                if (score > 0.58) {
-                    std::cout << "kf_1: " << kf_1->GetId() << "  kf_2: " << kf_2->GetId()  << "    kf_1: " << kf_1->GetFilename() << "  kf_2: " << kf_2->GetFilename() << "  score: " << score << std::endl;
+                if (score > loop_closure_thres_) {
+                    // std::cout << "kf_1: " << kf_1->GetId() << "  kf_2: " << kf_2->GetId()  << "    kf_1: "
+                    // << kf_1->GetFilename() << "  kf_2: " << kf_2->GetFilename() << "  score: " << score << std::endl;
+                    loop_closure_pairs_.push_back(std::make_pair(kf_1,kf_2));
+
                 }
-                if (score_max < score)      score_max = score;
+                // if (score_max < score)      score_max = score;
             }
         }
 
-        std::cout << "score_max: " << score_max << std::endl;
+        // std::cout << "score_max: " << score_max << std::endl;
     }
 
 }
