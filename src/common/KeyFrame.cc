@@ -17,7 +17,6 @@
  *
  */
 #include "KeyFrame.h"
-#include "log.h"
 
 using std::mutex;
 using std::unique_lock;

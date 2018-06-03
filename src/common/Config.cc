@@ -19,8 +19,8 @@
 
 #include <vector>
 #include <opencv2/core/core.hpp>
+#include <boost/log/trivial.hpp>
 #include "Config.h"
-#include "log.h"
 
 using std::vector;
 
@@ -47,11 +47,11 @@ bool Config::ReadParameters(std::string filename, Map &map) {
         // Read config file
         fs.open(filename.c_str(), cv::FileStorage::READ);
         if (!fs.isOpened()) {
-            LOGE("Failed to open file: %s", filename.c_str());
+            BOOST_LOG_TRIVIAL(error) << "Failed to open file: " << filename;
             return false;
         }
     } catch(cv::Exception &ex) {
-        LOGE("Parse error: %s", ex.what());
+        BOOST_LOG_TRIVIAL(error) << "Parse error: " << ex.what() << filename;
         return false;
     }
 
@@ -112,7 +112,7 @@ bool Config::ReadParameters(std::string filename, Map &map) {
             if (kf != nullptr) {
                 kf->AddObservation(mp, pixel);
             } else {
-                LOGD("Observation ignored, KeyFrame %d not found", kf_id);
+                BOOST_LOG_TRIVIAL(debug) << "Observation ignored, KeyFrame "<< kf_id  << " not found";
             }
         }
     }

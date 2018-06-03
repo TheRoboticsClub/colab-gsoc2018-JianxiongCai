@@ -3,6 +3,9 @@ project(slam-MapGen)
 
 set(CMAKE_CXX_STANDARD 11)
 
+# TODO: there are some problem with using boost dynamic lib
+set(Boost_USE_STATIC_LIBS ON)
+
 # Eigen
 find_package(Eigen3 REQUIRED)
 include_directories(
@@ -27,6 +30,10 @@ include_directories(src/DBoW2-ext)
 file(GLOB common_src src/common/*(.h|.cpp))
 file(GLOB dow2_ext_src src/DBoW2-ext/*(.h|.cpp))
 
+# boost (for logging)
+find_package(Boost COMPONENTS log log_setup thread date_time filesystem system REQUIRED)
+include_directories( ${Boost_INCLUDE_DIRS} )
+
 # Loop-detector
 file(GLOB loop_detector_src src/loop-detector/*)
 add_executable(loop_detection
@@ -36,4 +43,8 @@ add_executable(loop_detection
 target_link_libraries( loop_detection ${OpenCV_LIBS}
         ${DBoW2_LIBS}
         ${DLib_LIBS}
+        ${Boost_LIBRARIES}
         )
+
+add_executable(test_main test/test.cpp)
+target_link_libraries(test_main ${Boost_LIBRARIES})

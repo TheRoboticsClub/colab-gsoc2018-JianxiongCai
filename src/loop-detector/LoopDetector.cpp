@@ -1,4 +1,4 @@
-
+#include <boost/log/trivial.hpp>
 #include "LoopDetector.h"
 
 namespace MapGen {
@@ -11,9 +11,9 @@ namespace MapGen {
         // compute all features
         features_ = computeAllFeatures(map, img_dir);
 
-        std::cout << "Loading voc from " << pretrained_voc << std::endl;
+        BOOST_LOG_TRIVIAL(info) << "Loading voc from " << pretrained_voc;
         voc_.loadFromTextFile(pretrained_voc);
-        std::cout << "Loaded voc from " << pretrained_voc << std::endl;
+        BOOST_LOG_TRIVIAL(info) << "Loaded voc from " << pretrained_voc;
 
         // doing loop detector
 
@@ -46,7 +46,7 @@ namespace MapGen {
             features_all.push_back(features);
         }
 
-        std::cout << "size of features_all: " << features_all.size() << std::endl;
+        BOOST_LOG_TRIVIAL(info) << "size of features_all: " << features_all.size();
     }
 
     std::vector<std::pair<int, int>> LoopDetector::getLoopClosingPairs(MapGen::Map &map) {
@@ -61,7 +61,7 @@ namespace MapGen {
             cv::Mat descriptors;
             orb_->detectAndCompute(img, mask, keypoints, descriptors);
 
-            std::cout << "descriptors: " << descriptors.rows << std::endl;
+            BOOST_LOG_TRIVIAL(info) << "total " << descriptors.rows << " descriptors";
 
             // change the structure of descriptors
             std::vector<cv::Mat> features;
