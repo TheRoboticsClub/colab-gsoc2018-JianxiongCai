@@ -165,4 +165,12 @@ void KeyFrame::EraseConnection(KeyFrame* kf) {
         connectedKeyFrames_.erase(kf);
 }
 
+void KeyFrame::setBowVector(const DBoW2::BowVector &bow_vector) {
+    bow_vector_ = bow_vector;
+}
+
+DBoW2::BowVector KeyFrame::getBowVector() {
+    return bow_vector_;
+}
+
 }  // namespace SLAM_VIEWER

@@ -26,9 +26,9 @@ namespace MapGen {
         std::vector<std::pair<int, int>> getLoopClosingPairs(MapGen::Map &map);
 
     private:
-        // iterate through all images and compute all features (ORB)
-        std::vector<std::vector<cv::Mat>> computeAllFeatures(MapGen::Map &, const std::string &);
-
+        // iterate through all images and compute BowVector for each image
+        void computeAllFeatures(MapGen::Map &, const std::string &);
+        void detectLoops(MapGen::Map &map);
 
         // the directory to raw RGB image
         std::string img_dir_;

@@ -8,22 +8,23 @@ namespace MapGen {
         // initialize variables
         orb_ = cv::ORB::create();
 
-        // compute all features
-        features_ = computeAllFeatures(map, img_dir);
-
         BOOST_LOG_TRIVIAL(info) << "Loading voc from " << pretrained_voc;
         voc_.loadFromTextFile(pretrained_voc);
         BOOST_LOG_TRIVIAL(info) << "Loaded voc from " << pretrained_voc;
 
+        // compute all features
+        computeAllFeatures(map, img_dir);
+
         // doing loop detector
+        detectLoops(map);
 
         // TODO: what if the img_dir does not have tailing '/'
     }
 
 
-    std::vector<std::vector<cv::Mat>> LoopDetector::computeAllFeatures(MapGen::Map &map, const std::string &img_dir) {
+    void LoopDetector::computeAllFeatures(MapGen::Map &map, const std::string &img_dir) {
 
-        std::vector<std::vector<cv::Mat>> features_all;
+        // std::vector<std::vector<cv::Mat>> features_all;
         for (MapGen::KeyFrame *frame : map.GetAllKeyFrames()) {
             // read in the image
             std::string img_path = img_dir_ + frame->GetFilename();
@@ -42,11 +43,16 @@ namespace MapGen {
                 features.push_back(descriptors.row(i));
             }
 
+            // convert feature to bow vector
+            DBoW2::BowVector v_tmp;
+            voc_.transform(features,v_tmp);
+            frame->setBowVector(v_tmp);
+
             // append the features of current image to features_all
-            features_all.push_back(features);
+            // features_all.push_back(features);
         }
 
-        BOOST_LOG_TRIVIAL(info) << "size of features_all: " << features_all.size();
+        // BOOST_LOG_TRIVIAL(info) << "size of features_all: " << features_all.size();
     }
 
     std::vector<std::pair<int, int>> LoopDetector::getLoopClosingPairs(MapGen::Map &map) {
@@ -70,6 +76,25 @@ namespace MapGen {
                 features.push_back(descriptors.row(i));
             }
         }
+    }
+
+
+    void LoopDetector::detectLoops(MapGen::Map &map) {
+        double score_max = 0;
+        auto all_keyframes = map.GetAllKeyFrames();
+        for (int i = 0; i < all_keyframes.size(); i++){
+            KeyFrame * kf_1 = all_keyframes[i];
+            for (int j = i+11; j < all_keyframes.size(); j++){
+                KeyFrame * kf_2 = all_keyframes[j];
+                double score = voc_.score(kf_1->getBowVector(), kf_2->getBowVector());
+                if (score > 0.58) {
+                    std::cout << "kf_1: " << kf_1->GetId() << "  kf_2: " << kf_2->GetId()  << "    kf_1: " << kf_1->GetFilename() << "  kf_2: " << kf_2->GetFilename() << "  score: " << score << std::endl;
+                }
+                if (score_max < score)      score_max = score;
+            }
+        }
+
+        std::cout << "score_max: " << score_max << std::endl;
     }
 
 }
