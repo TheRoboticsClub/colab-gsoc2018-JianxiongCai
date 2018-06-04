@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 project(slam-MapGen)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -23,6 +23,8 @@ include_directories(${DLib_INCLUDE_DIRS})
 # src
 include_directories(src/common)
 include_directories(src/loop-detector)
+include_directories(src/utils)
+include_directories(src/config)
 
 # extending DBoW2 standard library
 include_directories(src/DBoW2-ext)
@@ -30,6 +32,8 @@ include_directories(src/DBoW2-ext)
 # common
 file(GLOB common_src src/common/*(.h|.cpp))
 file(GLOB dow2_ext_src src/DBoW2-ext/*(.h|.cpp))
+file(GLOB util_src src/utils/*(.h|.cpp))
+file(GLOB config_src src/config/*(.h|.cpp))
 
 # boost (for logging)
 find_package(Boost COMPONENTS log log_setup thread date_time filesystem system REQUIRED)
@@ -40,7 +44,9 @@ file(GLOB loop_detector_src src/loop-detector/*)
 add_executable(loop_detection
         ${loop_detector_src}
         ${common_src}
-        ${dow2_ext_src})
+        ${dow2_ext_src}
+        ${util_src}
+        ${config_src})
 target_link_libraries( loop_detection ${OpenCV_LIBS}
         ${DBoW2_LIBS}
         ${DLib_LIBS}

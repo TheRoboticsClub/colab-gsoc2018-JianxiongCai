@@ -27,6 +27,9 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <opencv2/core/core.hpp>
+#include <boost/log/trivial.hpp>
 #include "Map.h"
 
 namespace MapGen {

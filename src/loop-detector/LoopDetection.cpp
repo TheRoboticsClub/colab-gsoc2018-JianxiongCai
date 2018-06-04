@@ -1,33 +1,31 @@
-#include <Config.h>
-#include <boost/log/trivial.hpp>
+#include "Config.h"
+#include "LoopDetectionConfig.h"
 #include "Map.h"
 #include "LoopDetector.h"
+#include "logging_util.h"
+
+using namespace MapGen;
 
 int main (int argc, const char * argv[]){
-    if (argc != 1){
+    init_logging();
+
+    if (argc != 2){
         BOOST_LOG_TRIVIAL(error) << "Usage error";
         return 1;
     }
 
-    MapGen::Map map;
-    cv::FileStorage config(argv[1], cv::FileStorage::READ);
-    if (!config.isOpened()){
-        BOOST_LOG_TRIVIAL(error) << "Fail to read the config file: " << argv[1];
-        return 1;
-    }
-    
+
+    LoopDetectionConfig config(argv[1]);
+    Map map;
 
     // read in the trajectory file
-    if(!MapGen::Config::ReadParameters(argv[1], map)){
-        BOOST_LOG_TRIVIAL(error) << "fail to read the config file";
+    if(!MapGen::Config::ReadParameters(config.get_trajectory(), map)){
+        BOOST_LOG_TRIVIAL(error) << "fail to read the trajectory file at: " << config.get_trajectory();
         return 1;
     }
 
-    // TODO: check directory exist
-    std::string img_dir = std::string(argv[2]);
-
-    // TODO: for testing only
-    MapGen::LoopDetector detector(map,img_dir, "/home/ernest/SLAM/ORB_SLAM2/Vocabulary/ORBvoc.txt", 0.575);
+    // detect loops
+    MapGen::LoopDetector detector(map,config.get_img_dir(), config.get_vocabulary(), config.get_threshold());
 
     // print out the loop detection pair
     auto closing_pairs = detector.getLoopClosingPairs();

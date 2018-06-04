@@ -1,4 +1,3 @@
-#include <boost/log/trivial.hpp>
 #include "LoopDetector.h"
 
 namespace MapGen {
@@ -18,8 +17,6 @@ namespace MapGen {
 
         // doing loop detector
         detectLoops(map);
-
-        // TODO: what if the img_dir does not have tailing '/'
     }
 
 

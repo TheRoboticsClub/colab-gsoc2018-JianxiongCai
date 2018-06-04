@@ -15,6 +15,8 @@
 #include <BowVector.h>
 #include "ORBVocabularyExt.h"
 
+#include <boost/log/trivial.hpp>
+
 using namespace MapGen;
 
 namespace MapGen {

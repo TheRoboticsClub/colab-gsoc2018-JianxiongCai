@@ -17,9 +17,6 @@
  *
  */
 
-#include <vector>
-#include <opencv2/core/core.hpp>
-#include <boost/log/trivial.hpp>
 #include "Config.h"
 
 using std::vector;
