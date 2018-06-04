@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 # TODO: there are some problem with using boost dynamic lib
 set(Boost_USE_STATIC_LIBS ON)
+set(CMAKE_CXX_FLAGS "-pthread")
 
 # Eigen
 find_package(Eigen3 REQUIRED)
