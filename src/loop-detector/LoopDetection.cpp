@@ -4,12 +4,18 @@
 #include "LoopDetector.h"
 
 int main (int argc, const char * argv[]){
-    MapGen::Map map;
-
-    if (argc != 3){
+    if (argc != 1){
         BOOST_LOG_TRIVIAL(error) << "Usage error";
         return 1;
     }
+
+    MapGen::Map map;
+    cv::FileStorage config(argv[1], cv::FileStorage::READ);
+    if (!config.isOpened()){
+        BOOST_LOG_TRIVIAL(error) << "Fail to read the config file: " << argv[1];
+        return 1;
+    }
+    
 
     // read in the trajectory file
     if(!MapGen::Config::ReadParameters(argv[1], map)){
@@ -27,7 +33,7 @@ int main (int argc, const char * argv[]){
     auto closing_pairs = detector.getLoopClosingPairs();
     for (auto p : closing_pairs){
         BOOST_LOG_TRIVIAL(info) << "detected loop closing pair: " << p.first->GetFilename() << " & "
-                                << p.second->GetFilename() << std::endl;
+                                << p.second->GetFilename();
     }
 
     BOOST_LOG_TRIVIAL(info) << "detector initialized";
