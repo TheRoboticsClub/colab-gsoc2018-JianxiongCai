@@ -34,7 +34,7 @@ int main (int argc, const char * argv[]){
                                 << p.second->GetFilename();
     }
 
-    BOOST_LOG_TRIVIAL(info) << "detector initialized";
+    BOOST_LOG_TRIVIAL(info) << "Detection Completed";
 
     return 0;
 }

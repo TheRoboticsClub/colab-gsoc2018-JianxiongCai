@@ -7,6 +7,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(Boost_USE_STATIC_LIBS ON)
 set(CMAKE_CXX_FLAGS "-pthread")
 
+# config logging (auto-generation for different release build)
+MESSAGE("Generating logging_util.h for logging")
+configure_file("src/logging/logging_util.h.in" "${PROJECT_SOURCE_DIR}/src/logging/logging_util.h")
+
 # Eigen
 find_package(Eigen3 REQUIRED)
 include_directories(
@@ -23,7 +27,7 @@ include_directories(${DLib_INCLUDE_DIRS})
 # src
 include_directories(src/common)
 include_directories(src/loop-detector)
-include_directories(src/utils)
+include_directories(src/logging)
 include_directories(src/config)
 
 # extending DBoW2 standard library
@@ -32,7 +36,7 @@ include_directories(src/DBoW2-ext)
 # common
 file(GLOB common_src src/common/*(.h|.cpp))
 file(GLOB dow2_ext_src src/DBoW2-ext/*(.h|.cpp))
-file(GLOB util_src src/utils/*(.h|.cpp))
+file(GLOB logging_src src/logging/*(.h|.cpp))
 file(GLOB config_src src/config/*(.h|.cpp))
 
 # boost (for logging)
@@ -45,7 +49,7 @@ add_executable(loop_detection
         ${loop_detector_src}
         ${common_src}
         ${dow2_ext_src}
-        ${util_src}
+        ${logging_src}
         ${config_src})
 target_link_libraries( loop_detection ${OpenCV_LIBS}
         ${DBoW2_LIBS}
