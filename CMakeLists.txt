@@ -53,8 +53,5 @@ target_link_libraries( loop_detection ${OpenCV_LIBS}
         ${Boost_LIBRARIES}
         )
 
-add_executable(test_main test/test.cpp)
-target_link_libraries(test_main ${Boost_LIBRARIES})
-
 add_executable(config-gen src/config-gen/config-gen.cpp)
 target_link_libraries( config-gen ${OpenCV_LIBS})
