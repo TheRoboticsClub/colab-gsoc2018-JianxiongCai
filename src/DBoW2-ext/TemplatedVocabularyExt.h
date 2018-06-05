@@ -1,10 +1,31 @@
-//
-// Created by ernest on 18-6-2.
-//
+/**
+ *
+ *  Copyright (C) 2018 Jianxiong Cai <caijx AT shanghaitech.edu.cn>
+ *
+ *  The following code is a derivative work of the code from the ORB-SLAM2 project,
+ *  which is licensed under the GNU Public License, version 3. This code therefore
+ *  is also licensed under the terms of the GNU Public License, version 3.
+ *  For more information see <https://github.com/raulmur/ORB_SLAM2>.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Library General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
-// An extension of DoW2
-//      Add saveTotxt(), readFromtxt()
-// Define ORBVocabulary
+/**
+ * Changelog:   An extension of DoW2
+ *  Jun 2, 2018: Add saveTotxt(), readFromtxt()
+ */
 
 #ifndef DBoW2_EXT_TEMPLATEDVOCABULARYEXT_H
 #define DBoW2_EXT_TEMPLATEDVOCABULARYEXT_H
