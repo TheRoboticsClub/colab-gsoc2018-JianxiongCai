@@ -27,8 +27,8 @@
   *     TODO: rewrite the ReadParameter so that it is a static function, and separate it from the UI stuff
   */
 
-#ifndef SLAM_VIEWER_CONFIG_H_
-#define SLAM_VIEWER_CONFIG_H_
+#ifndef SLAM_MAPGEN_CONFIG_H_
+#define SLAM_MAPGEN_CONFIG_H_
 
 #include <iostream>
 #include <string>
@@ -90,7 +90,7 @@ class Config {
     double kViewpointF_;
 };
 
-}  // namespace SLAM_VIEWER
+}  // namespace SLAM_MAPGEN
 
 
-#endif  // SLAM_VIEWER_CONFIG_H_
+#endif  // SLAM_MAPGEN_CONFIG_H_

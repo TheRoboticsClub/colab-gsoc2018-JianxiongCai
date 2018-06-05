@@ -40,4 +40,4 @@ namespace MapGen {
             ORBVocabularyExt;
 }
 
-#endif //LOOP_DETECTION_ORBVOCABULARYEXT_H
+#endif

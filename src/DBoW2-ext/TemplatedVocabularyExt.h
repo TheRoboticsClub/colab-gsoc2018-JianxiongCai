@@ -191,4 +191,4 @@ namespace DBoW2 {
 
 }
 
-#endif //LOOP_DETECTION_TEMPLATEDVOCABULARYEXT_H
+#endif

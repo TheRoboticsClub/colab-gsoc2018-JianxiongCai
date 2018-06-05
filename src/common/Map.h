@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef SLAM_VIEWER_MAP_H
-#define SLAM_VIEWER_MAP_H
+#ifndef SLAM_MAPGEN_MAP_H
+#define SLAM_MAPGEN_MAP_H
 
 #include <set>
 #include <mutex>
@@ -66,6 +66,6 @@ class Map {
     std::mutex mmutexMap_;
 };
 
-}  // namespace SLAM_VIEWER
+}
 
-#endif  // SLAM_VIEWER_MAP_H
+#endif  // SLAM_MAPGEN_MAP_H

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef SLAM_VIEWER_MAPPOINT_H
-#define SLAM_VIEWER_MAPPOINT_H
+#ifndef SLAM_MAPGEN_MAPPOINT_H
+#define SLAM_MAPGEN_MAPPOINT_H
 
 #include <mutex>
 #include <set>
@@ -62,6 +62,6 @@ class MapPoint {
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
-}  // namespace SLAM_VIEWER
+}  // namespace SLAM_MAPGEN
 
-#endif  // SLAM_VIEWER_MAPPOINT_H
+#endif  // SLAM_MAPGEN_MAPPOINT_H
